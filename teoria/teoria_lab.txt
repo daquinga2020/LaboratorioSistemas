@@ -1,0 +1,64 @@
+//////Tema 2////// http://recursostic.educacion.es/observatorio/web/gl/equipamiento-tecnologico/hardware/362-eduardo-e-quiroga _> para completar
+
+La partición EFI en la que van los kernel y las cosas de arranque para uefi. Esta partición está prácticamente siempre.
+Partición swap -> particion de intercambio, para almacenar datos que no se estén usando.
+FAT32 -> estructura de datos de windows
+investigar comando mount
+/////Tema 3//////
+
+Cargador primario -> grub, arranca el kernel.
+El firmware -> es el software que viene incrustado en el hardware (P. ej. en
+una ROM en la placa madre).
+Sus funciones principales son:
+	-Inicializar el hardware de la máquina: enumerar los dispositivos,
+	inicializar el controlador de memoria DRAM, la gestión de
+	energı́a, el sistema de gestión del sistema (SSM, Ring -2), etc.
+	-Ofrecer una interfaz para interoperar con algunos componentes
+	hardware.
+	-Iniciar el arranque del sistema (de disco o de red).
+
+Suspender -> reduce al minimo la energia todos los componenetes(procesador, disco duro...) menos la ram.
+Hibernar -> se salva toda la memoria ram en el disco duro y posteriormente lo apaga todo, pero al encender de nuevo se mantiene el estado que teniamos antes de ponerlo a hibernar.
+
+La UEFI es un firmware. Antiguamente se usaba BIOS.
+1 - Arranca UEFI, elige un orden de arranque.
+2- Cargan unos ficheros especiales(ficheros *.efi). Cargador de arranque.
+
+efibootmgr -v -> Te da detalles de cómo esta configurado EFI. Ejecutar en modo root.
+
+Los cargadores son boot managers, gestores de arranque. El objetivo del cargador es seleccionar y encontrar la imagen del kernel que se quiere arrancar en una partición del disco, cargarla en memoria y saltar a ella.
+GRUB dispone de:
+	-Un intérprete de comandos propio.
+	-Driver para entender particiones EXT.
+
+KERNEL(12-13-14 no hacen falta)
+Se empiezan a crear procesos:
+	-PID 0: cpu idle. Su función es ejecutar cuando no hay nada
+	que hacer.
+	-PID 1: init.
+	-PID 2: kthreadd. Gestionará la creación de hilos del kernel.
+Montar initrd:
+	-Initrd (Initial RAM Disk) es un sistema de ficheros que se usa
+	para poder arrancar el sistema completo. Actualmente, se usa
+	initramfs, que usa el driver tmpfs 1 .
+	-Se monta en el raı́z de forma temporal.
+		-Hay muchos drivers distintos para todos los tipos de hardware
+		de almacenamiento que existen. En algunos casos requieren
+		comandos.
+		-Son módulos del kernel que se necesitarán cargar para poder
+		montar el sistema de ficheros raı́z verdadero.
+
+UEFI - boot - groob - kernell - systemd(init) -> orden de arranque
+
+Systemd es una colección de demonios, bibliotecas, programas y componentes del núcleo.
+
+
+
+
+
+
+
+
+
+
+

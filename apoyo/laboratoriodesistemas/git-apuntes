@@ -1,0 +1,90 @@
+DESARROLLO LOCAL
+
+commit: hacer copias de las diferentes versiones anadiendolas al repositorio
+	git add ficheros    ej: git add main.go
+	git status (comprobar si hay cambios pendientes de subir/hacer commit)
+		   (en este caso los hay y sale en verde(subido con add))
+	git commmit -m 'comentario' (lo sube)
+	git status (no hay nada para commit/subir)
+	git log: muestra que commits hay subidos
+	
+	si hacemos un cambio en main.go
+	git status (hay cambios para subir y sale en rojo(no subido con add))
+	repetir el proceso anterior	
+tecnicaménte(dibujo pag 93): stage:  add añade el fichero a staging area 
+                             commit: lo sube/añade al repositorio
+
+Ignorar ficheros(pag 111 y 112 globbing): que no salgan al poner git status
+	editar .gitignore poniendo el nombre del fichero que queremos ignorar
+		ej: cata .gitignore --  patatilla
+	git status 
+		mostrará .gitignore pero no patatilla
+	git add .gitignore y git commit -m 'ignore patatilla'
+
+
+Comandos(pag 20):
+		git ls-tree identificador corto (conseguido con adog)
+		git cat-file -p nº da que da el comando anterior
+  alternativa:  git show identificafor corto:main.go
+
+Head: lo que usa git para saber por donde voy
+	git checkout id corto (head apunta al commit al que corresponde el id)
+	     si head apunta directamente a un commit no podemos trabajar/modificar
+	git checkout nb rama (head apunta a esa rama)
+
+Etiquetas: apuntan a un comit
+	poner tag: git tag etiqueta (idcorto -- sino hay etiqueta el actual)
+	git tag -d etiqueta: borrar
+	buscar por tag: git checkout tag
+
+Rama = branch
+	crear: git branch nbrama
+	cuales tengo: git branch (el * marca en cual estoy)
+
+git diff id1 id2 : compara ambos ficheros
+git diff rama1 rama2: compara dos ramas
+
+Merge: fusiona/junta dos ramas
+	git merge optinal master (estando en master)
+	git merge --continue / git merge --abort
+Rebase normal: transplantar un rama a otra
+	git rebase opt master (estando en master)
+	arreglar conflicto
+	git add fich
+	git rebase --continue
+	en el caso de no querer continuar: git rebase --abort
+
+Rebase -i:
+	git rebase -i idcorto
+	git rebase -i nbrama
+	noop = no hay ningún commit
+	
+	pick coge normal (sale por defecto)
+	reword (cambaiar el mensaje y salvar)
+	s (fusiona dos commits)
+		(tiene q tener por delente más commits o no funciona)
+		(habŕa que resolver algún conficto)
+	drop (borra un commit)
+	resto vienen al abrir rebase -i (4 anteriores uso clase)
+
+DESARROLLO EN REMOTO
+
+Si vamosa hacer push y fetch crear el repo con:
+	git init --bare nombre.git
+	no puedo trabajar en el directamente, tengo que clonarlo
+Clonar:
+	git clone uno dos : se crea un repo dos que es un clon de uno
+	por ssh: git clone lara@localhost:/home/lara/git/examen/central.git/ repo2
+	git remote (-v): sabe q es una copia	
+		en uno no saldra nada por una salida, pero en dos si
+
+push: subir los commits a repocentral(el .git)  
+fetch: traerme los cambios del .git
+pull: traerse los cambios del .git y luego hace un merge con la rama local
+
+"normal" hacer: -git add; git commit; git push (trabajolab)
+		-git pull(soluciona el erro);
+		-ahora si git push (trabajo casa); git pull (trabajolab)
+
+Hacer push de una rama: git push origin rama
+Hacer push de las etiquetas: git push --tags
